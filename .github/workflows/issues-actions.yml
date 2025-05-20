@@ -1,0 +1,120 @@
+name: Issues Management
+
+permissions:
+  issues: write
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+jobs:
+  enforce-issue-title-format:
+    name: Enforce Issue Title Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check issue title format
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueTitle = context.payload.issue.title;
+            const regex = /^(MTN|FTR|BGF|BGR|DOC|DEP|PRR)-[A-Z0-9]+:\s.+$/; // Format: MEETING-001: Title text
+            if (!regex.test(issueTitle)) {
+              throw new Error(`Invalid issue title format. Please use one of the following formats:
+              - MTN-001: Title for meeting notes
+              - FTR-001: Title for feature implementation
+              - BGF-001: Title for bug fixes
+              - DOC-001: Title for documentation
+              - DEP-001: Title for deployment
+              - PRR-001: Title for progress report`);
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  label-issues:
+    name: Apply Labels to Issues
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add labels to issue based on title and body keywords
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issueTitle = context.payload.issue.title.toLowerCase();
+            const issueBody = context.payload.issue.body ? context.payload.issue.body.toLowerCase() : '';
+            const existingLabels = context.payload.issue.labels.map(label => label.name.toLowerCase());
+            const labelsToAdd = [];
+
+            console.log("Existing Labels:", existingLabels);
+            console.log("Labels to Add:", labelsToAdd);
+            console.log("Issue Title:", issueTitle);
+            console.log("Issue Body:", issueBody);
+
+            // Match title or body keywords to assign labels
+            if (issueTitle.startsWith("mtn-") && !existingLabels.includes("meeting-notes")) {
+              labelsToAdd.push("meeting-notes");
+            } else if (issueTitle.startsWith("ftr-") && !existingLabels.includes("feature-implementation")) {
+              labelsToAdd.push("feature-implementation");
+            } else if (issueTitle.startsWith("bgf-") && !existingLabels.includes("bug-fix")) {
+              labelsToAdd.push("bug-fix");
+            } else if (issueTitle.startsWith("doc-") && !existingLabels.includes("documentation")) {
+              labelsToAdd.push("documentation");
+            } else if (issueTitle.startsWith("dep-") && !existingLabels.includes("deployment")) {
+              labelsToAdd.push("deployment");
+            }
+
+            // Add more labels based on keywords in title or body
+            if (issueBody.includes("database") && !existingLabels.includes("database")) {
+              labelsToAdd.push("database");
+            }
+            if (issueBody.includes("code comments") && !existingLabels.includes("code-comments")) {
+              labelsToAdd.push("code-comments");
+            }
+            if (issueBody.includes("testing") && !existingLabels.includes("testing")) {
+              labelsToAdd.push("testing");
+            }
+            if (issueBody.includes("performance") && !existingLabels.includes("performance")) {
+              labelsToAdd.push("performance");
+            }
+            if (issueBody.includes("documentation") && !existingLabels.includes("documentation")) {
+              labelsToAdd.push("documentation");
+            }
+            if (issueBody.includes("deployment") && !existingLabels.includes("deployment")) {
+              labelsToAdd.push("deployment");
+            }
+
+            // Apply only new labels to the issue
+            if (labelsToAdd.length > 0) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                labels: labelsToAdd
+              });
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  
+  update-issue-date:
+      name: Update Issue Date
+      runs-on: ubuntu-latest
+      steps:
+        - name: Replace Date in Issue Body
+          uses: actions/github-script@v6
+          with:
+            script: |
+              const issue_number = context.payload.issue.number;
+              const repo = context.repo.repo;
+              const owner = context.repo.owner;
+              const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+              const new_body = context.payload.issue.body.replace(/## 📅 Date: .*/, `## 📅 Date: ${today}`);
+  
+              github.rest.issues.update({
+                owner,
+                repo,
+                issue_number,
+                body: new_body
+              });
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

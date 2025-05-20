@@ -1,0 +1,67 @@
+name: Auto-Set PR Title
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+permissions:
+  pull-requests: write
+
+jobs:
+  auto-set-title:
+    name: Auto Set PR Title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug PR Information
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (!context.payload.pull_request) {
+              console.log("❌ No pull request data found. Skipping title update.");
+              return;
+            }
+
+            const pr = context.payload.pull_request;
+            console.log("🔍 PR Debug Info:");
+            console.log("🔍 PR Title Before:", pr.title);
+            console.log("🔍 PR Branch Name:", pr.head.ref);
+            console.log("🔍 PR Number:", pr.number);
+
+      - name: Set PR Title Based on Issue Number
+        uses: actions/github-script@v6
+        with:
+          script: |
+            if (!context.payload.pull_request) {
+              console.log("❌ No pull request data found. Skipping title update.");
+              return;
+            }
+
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+            const branchName = pr.head.ref;
+
+            console.log("📢 Checking branch name:", branchName);
+
+            let issueNumber = branchName.match(/\d+/)?.[0];
+
+            if (!issueNumber) {
+              console.log("❌ No issue number found in branch name. Skipping PR title update.");
+              return;
+            }
+
+            const newTitle = `Issue #${issueNumber}: ${pr.title.replace(/Issue #\d+: /, '')}`;
+
+            console.log(`📝 Attempting to update PR title to: "${newTitle}"`);
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              title: newTitle
+            });
+
+            console.log(`✅ PR title successfully updated to: "${newTitle}"`);

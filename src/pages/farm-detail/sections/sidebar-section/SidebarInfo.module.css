@@ -1,0 +1,7 @@
+/* SidebarInfo.module.css */
+
+.sidebar-section {
+  flex-direction: column;
+  gap: var(--gap-md);
+  width: 100%;
+}

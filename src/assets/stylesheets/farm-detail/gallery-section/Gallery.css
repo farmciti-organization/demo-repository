@@ -1,0 +1,96 @@
+.gallery-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--color-background);
+}
+
+.gallery-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.gallery-title {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-page-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+  line-height: var(--heading-line-height);
+  padding-bottom: var(--gap-sm);
+}
+
+/* gallery */
+.gallery-grid {
+  display: grid;
+  width: 100%;
+  gap: var(--gap-mini);
+
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: var(--gallery-height) var(--gallery-height);
+  grid-template-areas:
+    "large thumb1 thumb2"
+    "large thumb3 thumb4";
+}
+
+/* first photo */
+.gallery-item--large {
+  grid-area: large;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+  grid-area: large;
+}
+.gallery-thumb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+}
+
+.gallery-thumb.thumb1 {
+  grid-area: thumb1;
+}
+.gallery-thumb.thumb2 {
+  grid-area: thumb2;
+}
+.gallery-thumb.thumb3 {
+  grid-area: thumb3;
+}
+.gallery-thumb.thumb4 {
+  grid-area: thumb4;
+}
+
+.photo-card {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+}
+
+.view-all-button {
+  grid-area: thumb4;
+  justify-self: end;
+  align-self: end;
+
+  position: relative;
+  z-index: 1;
+
+  margin-right: var(--gap-sm);
+  margin-bottom: var(--gap-sm);
+
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.view-all-button:hover {
+  background-color: var(--color-primary-green);
+  color: var(--color-text-light);
+}

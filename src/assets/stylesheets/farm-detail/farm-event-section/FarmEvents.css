@@ -1,0 +1,74 @@
+.events-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--gap-lg) 0;
+  background-color: var(--color-background);
+}
+
+.events-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ─── Header ─── */
+.events-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-primary-light-grey);
+  border-radius: var(--border-radius-sm);
+  padding: var(--gap-sm) var(--gap-md);
+}
+
+.events-title {
+  margin: 0;
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-section-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+}
+
+/* Navigation arrows */
+.events-nav {
+  display: flex;
+  gap: var(--gap-sm);
+}
+
+.nav-button {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--color-text-grey);
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-text-grey);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-button:hover {
+  background: transparent;
+  border-color: var(--color-text-dark);
+  color: var(--color-text-dark);
+}
+
+/* ─── Card grid ─── */
+.events-card-list {
+  margin-top: var(--gap-md);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap-sm);
+}
+
+/* two-column layout on medium+ screens */
+@media (min-width: 768px) {
+  .events-card-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}

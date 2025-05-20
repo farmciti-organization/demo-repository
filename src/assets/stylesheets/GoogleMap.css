@@ -1,0 +1,45 @@
+/* GoogleMap.css */
+.map-label {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid var(--color-primary-green);
+
+  border-radius: 16px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-dark);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  /* pointer-events: none;  삭제! */
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+.zoom-controls {
+  position: absolute;
+  bottom: var(--gap-md);  
+  right: var(--gap-md);  
+  display: flex;
+  flex-direction: row;
+
+}
+
+.zoom-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: var(--color-primary-green);
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+}
+
+.zoom-button:hover {
+  background-color: var(--color-primary-dark-green);
+}
+

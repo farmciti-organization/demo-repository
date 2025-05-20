@@ -1,0 +1,14 @@
+name: Test PR Trigger
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - edited
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Debug Info
+        run: echo "PR Event Detected!"

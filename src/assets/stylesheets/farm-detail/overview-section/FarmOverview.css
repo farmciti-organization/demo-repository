@@ -1,0 +1,81 @@
+.overview-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--color-background);
+}
+
+.overview-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.overview-title {
+  background: var(--color-primary-light-grey);
+  padding: var(--gap-sm) var(--gap-md);
+  border-radius: var(--border-radius-sm);
+
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-section-title);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+}
+
+/* text under the grey bar */
+.overview-text {
+  margin: var(--gap-md);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  color: var(--color-text-dark);
+  padding-bottom: var(--gap-sm);
+}
+
+/* divider line before contacts */
+.contact-info {
+  border-top: 2px solid var(--color-primary-light-grey);
+  border-bottom: 2px solid var(--color-primary-light-grey);
+
+  padding: var(--gap-lg) var(--gap-md);
+
+  display: grid;
+
+  /* 3row: icon / label / text */
+  grid-template-columns: auto auto 1fr;
+  column-gap: var(--gap-sm);
+  row-gap: var(--gap-md);
+}
+
+.contact-row {
+  display: contents;
+}
+
+/* shrink the SVGs to a nice size */
+.info-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* label column */
+.contact-label {
+  white-space: nowrap;
+  font-family: var(--font-family-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+}
+
+/* content column */
+.contact-text {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  color: var(--color-text-dark);
+}
+
+/* link styling stays as you had it */
+.contact-info a {
+  color: var(--color-primary-dark);
+  font-family: var(--font-family-body);
+  text-decoration: underline;
+}

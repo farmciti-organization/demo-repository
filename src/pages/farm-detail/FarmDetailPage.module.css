@@ -1,0 +1,36 @@
+.main-content {
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 var(--gap-sm);
+}
+
+.detail-container {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-xl);
+  margin: var(--gap-md) auto;
+  justify-content: space-between;
+}
+
+.detail-container .detail-main {
+  max-width: 70%;
+}
+
+.detail-container .detail-sidebar {
+  max-width: 30%;
+}
+
+.detail-main {
+  flex: 1;
+}
+
+.detail-sidebar {
+  position: sticky;
+  align-self: flex-start;
+  top: calc(var(--gap-lg) + var(--gap-lg) + var(--gap-xl));
+}
+
+.detail-sidebar > * {
+  margin-bottom: var(--gap-md);
+}
+
